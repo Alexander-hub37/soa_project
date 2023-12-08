@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from soa_app.views import dni_info, iniciar_sesion,  listar_dni_info, inicio, vacuna_info, info_covid_pais, grafico_covid, chatbot, logout_view, noticias, Rpta_OpenAI
+from soa_app.views import dni_info, iniciar_sesion,  listar_dni_info, inicio, vacuna_info, info_covid_pais, grafico_covid, chatbot, logout_view, noticias, Rpta_OpenAI, ruc_info
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,7 +28,8 @@ urlpatterns = [
     path('info_covid_pais/', info_covid_pais, name='info_covid_pais'),
     path('grafico_covid/', grafico_covid, name='grafico_covid'),
     path('chatbot/', chatbot, name='chatbot'),
-    path('logout/', logout_view, name='logout'),
+    path('', logout_view, name='logout'),
     path('noticias/', noticias, name='noticias'),
     path('openai_consulta/', Rpta_OpenAI, name='openai_consulta'),
+    path('ruc_info/', ruc_info, name='ruc_info'),
 ]

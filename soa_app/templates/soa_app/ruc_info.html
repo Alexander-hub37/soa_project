@@ -1,33 +1,223 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>Consulta RUC</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio</title>
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/chatbot.css' %}">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+            /* Evita la barra de desplazamiento horizontal */
+        }
+
+        .main-container {
+            transition: margin-left 0.5s;
+            /* Agregamos una transición al margen izquierdo */
+        }
+
+        .navbar {
+            background-color: #5e95a1;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .menu-icon {
+            font-size: 24px;
+            cursor: pointer;
+            color: white;
+            margin-right: 10px;
+        }
+
+        .menu {
+            width: 0;
+            height: 100%;
+            background-color: #5e95a1;
+            position: fixed;
+            top: 0;
+            left: 0;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: center;
+
+        }
+
+        .menu a {
+            display: block;
+            color: #fff;
+            margin-bottom: 8px;
+            text-decoration: none;
+            padding: 10px;
+            margin-left: 30px;
+            margin-top: 30px;
+        }
+
+        .navbar h1 {
+            margin-left: 20px;
+        }
+
+        .login-container {
+            margin: 50px auto;
+            max-width: 300px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .login-container label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .login-container input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+
+        .login-container button {
+            background-color: #5e95a1;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .menu-header {
+            font-size: 1.5em;
+            /* Tamaño de fuente más grande */
+            margin-bottom: 10px;
+            text-align: center;
+
+            /* Espaciado inferior para separar del resto de las opciones */
+        }
+
+        .menu-option {
+            display: block;
+            color: #fff;
+            margin-bottom: 8px;
+            text-decoration: none;
+            padding: 10px;
+            font-size: 1.2em;
+            /* Tamaño de fuente para las opciones */
+        }
+
+        form {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 0 auto;
+            max-width: 600px;
+            /* Aumenta el ancho máximo del formulario */
+        }
+
+        .column-left,
+        .column-right {
+            display: inline-block;
+            vertical-align: top;
+            width: 45%;
+            /* Establece el ancho de las columnas */
+        }
+
+        input {
+            width: 80%;
+            /* Ajusta el ancho de los campos de entrada */
+            padding: 10px;
+            margin: 5px 0;
+        }
+
+        label {
+            display: inline-block;
+            width: 30%;
+            /* Ancho de las etiquetas */
+            text-align: right;
+            margin-right: 5px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        h2 {
+            color: #5e95a1; /* Color del texto */
+            text-align: center; /* Centrar el texto */
+            font-size: 2em; /* Tamaño de la fuente */
+            /* Agrega más estilos según sea necesario */
+        }
+    </style>
 </head>
 
 <body>
-    <div class="container">
-        <h1>Consulta de RUC</h1>
-        <form method="post">
-            {% csrf_token %}
-            <div class="column-left">
-                {{ form.ruc.label_tag }} {{ form.ruc }}
-                {{ form.razon_social.label_tag }} {{ form.razon_social }}
-                {{ form.estado.label_tag }} {{ form.estado }}
-                {{ form.condicion.label_tag }} {{ form.condicion }}
-                {{ form.direccion.label_tag }} {{ form.direccion }}
+
+    <div class="main-container">
+        <div class="navbar">
+            <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
+            <div class="menu">
+
+                <!-- Agrega las opciones del menú aquí -->
+                <a href="#" onclick="openStartPage()" class="fas fa-home"> Inicio</a>
+                <a href="#" onclick="openAddForm()" class="fas fa-users"> Usuarios</a>
+                <a href="#" onclick="vacuForm()" class="fa fa-hospital-o"> COVID-19 Vacunas</a>
+                <a href="#" onclick="countryForm()" class="fa fa-globe"> COVID-19</a>
+                <a href="#" onclick="allForm()" class="fa fa-bar-chart"> COVID-19 Historia</a>
+                <a href="#" onclick="openConsultaAI()" class="fa fa-bar-chart">CONSULTAS AI</a>
+                <a href="#" onclick="noticias()" class="fa fa-bar-chart">noticias AI</a>
+                <a href="#" onclick="conRuc()" class="fa fa-bar-chart">CONSULTA RUC</a>
+
+
+
             </div>
-            <div class="column-right">
-                {{ form.departamento.label_tag }} {{ form.departamento }}
-                {{ form.provincia.label_tag }} {{ form.provincia }}
-                {{ form.distrito.label_tag }} {{ form.distrito }}
-                {{ form.ubigeo.label_tag }} {{ form.ubigeo }}
-            </div>
-            <button type="submit">Consultar</button>
-        </form>
+            <h1 style="color: white;">Laboratorio Tamal</h1>
+            <a href="{% url 'logout' %}" style="color:#fff; font-size: 48px" white>
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
+        </div>
+
+        <div class="container">
+            <h2 class="center">CONSULTA RUC</h2>
+            <form method="post">
+                {% csrf_token %}
+                <div class="column-left">
+                    {{ form.ruc.label_tag }} {{ form.ruc }}
+                    {{ form.razon_social.label_tag }} {{ form.razon_social }}
+                    {{ form.estado.label_tag }} {{ form.estado }}
+                    {{ form.condicion.label_tag }} {{ form.condicion }}
+                    {{ form.direccion.label_tag }} {{ form.direccion }}
+                </div>
+                <div class="column-right">
+                    {{ form.departamento.label_tag }} {{ form.departamento }}
+                    {{ form.provincia.label_tag }} {{ form.provincia }}
+                    {{ form.distrito.label_tag }} {{ form.distrito }}
+                    {{ form.ubigeo.label_tag }} {{ form.ubigeo }}
+                </div>
+                <button type="submit">Consultar</button>
+            </form>
+        </div>
+
     </div>
-    
 
     <script>
 
@@ -39,7 +229,103 @@
         document.querySelector('#id_provincia').readOnly = true;
         document.querySelector('#id_distrito').readOnly = true;
         document.querySelector('#id_ubigeo').readOnly = true;
+
+        function toggleMenu() {
+            var menu = document.querySelector('.menu');
+            menu.style.width = menu.style.width === '200px' ? '0' : '200px';
+            document.querySelector('.main-container').style.marginLeft = menu.style.width === '200px' ? '200px' : '0';
+        }
+
+        function closeMenu() {
+            var menu = document.querySelector('.menu');
+            menu.style.width = '0';
+            document.querySelector('.main-container').style.marginLeft = '0';
+        }
+
+        function openAddForm() {
+            // Redirigir a la página dniinfo.html
+            window.location.href = '/listar_dni_info';
+        }
+        function openStartPage() {
+            // Redirigir a la página dniinfo.html
+            window.location.href = '/inicio';
+        }
+        function vacuForm() {
+            // Redirigir a la página dniinfo.html
+            window.location.href = '/vacuna_info';
+        }
+
+        function countryForm() {
+            // Redirigir a la página dniinfo.html
+            window.location.href = '/info_covid_pais';
+        }
+        function allForm() {
+            // Redirigir a la página dniinfo.html
+            window.location.href = '/grafico_covid';
+        }
+        function openConsultaAI() {
+            // Redirigir a la página dniinfo.html
+            window.location.href = '/openai_consulta';
+        }
+        function noticias() {
+            // Redirigir a la página dniinfo.html
+            window.location.href = '/noticias';
+        }
+
+        function conRuc() {
+            // Redirigir a la página dniinfo.html
+            window.location.href = '/ruc_info';
+        }
+
+        function sendMessage() {
+            var userMessage = document.getElementById('user-input').value;
+            if (userMessage.trim() !== '') {
+                document.getElementById('user-input').value = '';  // Limpiar el input
+                document.getElementById('chat-log').innerHTML += `
+                    <div class="message-container user-message">
+                        <div class="message">
+                            ${userMessage}
+                        </div>
+                    </div>`;
+
+                // Enviar mensaje al servidor
+                fetch('/chatbot/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRFToken': '{{ csrf_token }}'  // Asegúrate de tener el token CSRF en tu formulario
+                    },
+                    body: 'message=' + encodeURIComponent(userMessage)
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.response) {
+                            var botResponse = data.response;
+                            document.getElementById('chat-log').innerHTML += `
+                                <div class="message-container bot-message">
+                                    <div class="message">
+                                        ${botResponse}
+                                    </div>
+                                </div>`;
+                        } else {
+                            console.error('Error en la respuesta del servidor');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error al enviar mensaje al servidor:', error);
+                    });
+            } else {
+                console.error('El mensaje del usuario no puede estar vacío.');
+            }
+        }
+
+        function toggleChatWindow() {
+            var chatWindow = document.getElementById('chat-window');
+            chatWindow.style.transform = chatWindow.style.transform === 'translateY(0%)' ? 'translateY(150%)' : 'translateY(0%)';
+        }
+
     </script>
+
 </body>
 
 </html>

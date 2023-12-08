@@ -15,7 +15,39 @@ from django.contrib.auth import logout
 from django.http import HttpResponseNotAllowed
 
 
+class RucForm(forms.Form):
+    ruc = forms.CharField(label='Número de RUC', max_length=11, required=True)
+    razon_social = forms.CharField(label='Razón Social', max_length=255, required=False)
+    estado = forms.CharField(label='Estado', max_length=50, required=False)
+    condicion = forms.CharField(label='Condición', max_length=50, required=False)
+    direccion = forms.CharField(label='Dirección', max_length=255, required=False)
+    departamento = forms.CharField(label='Departamento', max_length=50, required=False)
+    provincia = forms.CharField(label='Provincia', max_length=50, required=False)
+    distrito = forms.CharField(label='Distrito', max_length=50, required=False)
+    ubigeo = forms.CharField(label='Ubigeo', max_length=6, required=False)
 
+def ruc_info(request):
+    if request.method == 'POST':
+        ruc = request.POST.get('ruc')
+        url = f'https://dniruc.apisperu.com/api/v1/ruc/{ruc}?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImFsZXhhbmRlcnNrMjAxOUBnbWFpbC5jb20ifQ.qTHRcHFhIU0LuI06lYJWuARn3aozodTA7V5g2baKRIs'
+        response = requests.get(url)
+        data = response.json()
+
+        form = RucForm(initial={
+            'ruc': ruc,
+            'razon_social': data['razonSocial'],
+            'estado': data['estado'],
+            'condicion': data['condicion'],
+            'direccion': data['direccion'],
+            'departamento': data['departamento'],
+            'provincia': data['provincia'],
+            'distrito': data['distrito'],
+            'ubigeo': data['ubigeo'],
+        })
+    else:
+        form = RucForm()
+
+    return render(request, 'soa_app/ruc_info.html', {'form': form})
 
 class DniForm(forms.Form):
     dni = forms.CharField(label='Número de DNI', max_length=8, required=True)
@@ -115,7 +147,7 @@ def logout_view(request):
 
 
 
-key = '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'
+key = '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'
 openai.api_key = key
 modelo = 'gpt-3.5-turbo'
 
@@ -161,7 +193,7 @@ def noticias(request):
 
 def Rpta_OpenAI(request):
 
-    key='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'
+    key='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'
     if request.method== 'POST':
         consulta = request.POST.get("openai_consulta")
     else:

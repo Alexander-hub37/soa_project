@@ -15,12 +15,12 @@
             padding: 0;
             font-family: Arial, sans-serif;
             overflow-x: hidden;
-            /* Evita la barra de desplazamiento horizontal */
+            
         }
 
         .main-container {
             transition: margin-left 0.5s;
-            /* Agregamos una transición al margen izquierdo */
+          
         }
 
         .navbar {
@@ -100,11 +100,11 @@
 
         .menu-header {
             font-size: 1.5em;
-            /* Tamaño de fuente más grande */
+        
             margin-bottom: 10px;
             text-align: center;
 
-            /* Espaciado inferior para separar del resto de las opciones */
+           
         }
 
         .menu-option {
@@ -114,7 +114,7 @@
             text-decoration: none;
             padding: 10px;
             font-size: 1.2em;
-            /* Tamaño de fuente para las opciones */
+            
         }
     </style>
 </head>
@@ -126,7 +126,7 @@
             <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
             <div class="menu">
                 
-                <!-- Agrega las opciones del menú aquí -->
+                
                 <a href="#" onclick="openStartPage()" class="fas fa-home"> Inicio</a>
                 <a href="#" onclick="openAddForm()" class="fas fa-users"> Usuarios</a>
                 <a href="#" onclick="vacuForm()" class="fa fa-hospital-o"> COVID-19 Vacunas</a>
@@ -134,6 +134,7 @@
                 <a href="#" onclick="allForm()" class="fa fa-bar-chart"> COVID-19 Historia</a>
                 <a href="#" onclick="openConsultaAI()" class="fa fa-bar-chart">CONSULTAS AI</a>
                 <a href="#" onclick="noticias()" class="fa fa-bar-chart">noticias AI</a>
+                <a href="#" onclick="conRuc()" class="fa fa-bar-chart">CONSULTA RUC</a>
                 
 
                 
@@ -179,33 +180,37 @@
         }
 
         function openAddForm() {
-            // Redirigir a la página dniinfo.html
+            
             window.location.href = '/listar_dni_info';
         }
         function openStartPage() {
-            // Redirigir a la página dniinfo.html
+            
             window.location.href = '/inicio';
         }
         function vacuForm() {
-            // Redirigir a la página dniinfo.html
+            
             window.location.href = '/vacuna_info';
         }
 
         function countryForm() {
-            // Redirigir a la página dniinfo.html
+            
             window.location.href = '/info_covid_pais';
         }
         function allForm() {
-            // Redirigir a la página dniinfo.html
+            
             window.location.href = '/grafico_covid';
         }
         function openConsultaAI() {
-            // Redirigir a la página dniinfo.html
+           
             window.location.href = '/openai_consulta';
         }
         function noticias() {
-            // Redirigir a la página dniinfo.html
+            
             window.location.href = '/noticias';
+        }
+        function conRuc() {
+         
+            window.location.href = '/ruc_info';
         }
 
         function sendMessage() {

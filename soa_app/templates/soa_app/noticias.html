@@ -158,6 +158,7 @@
                 <a href="#" onclick="allForm()" class="fa fa-bar-chart"> COVID-19 Historia</a>
                 <a href="#" onclick="openConsultaAI()" class="fa fa-bar-chart">CONSULTAS AI</a>
                 <a href="#" onclick="noticias()" class="fa fa-bar-chart">noticias AI</a>
+                <a href="#" onclick="conRuc()" class="fa fa-bar-chart">CONSULTA RUC</a>
             </div>
             <h1 style="color: white;">Laboratorio Tamal</h1>
             <a href="{% url 'logout' %}" style="color:#fff; font-size: 48px" white>
@@ -231,6 +232,10 @@
     
         function noticias() {
             redirectTo('/noticias');
+        }
+        function conRuc() {
+            // Redirigir a la página dniinfo.html
+            window.location.href = '/ruc_info';
         }
     </script>
     
