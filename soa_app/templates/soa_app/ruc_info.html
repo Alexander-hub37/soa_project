@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Consulta RUC</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Consulta de RUC</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="column-left">
+                {{ form.ruc.label_tag }} {{ form.ruc }}
+                {{ form.razon_social.label_tag }} {{ form.razon_social }}
+                {{ form.estado.label_tag }} {{ form.estado }}
+                {{ form.condicion.label_tag }} {{ form.condicion }}
+                {{ form.direccion.label_tag }} {{ form.direccion }}
+            </div>
+            <div class="column-right">
+                {{ form.departamento.label_tag }} {{ form.departamento }}
+                {{ form.provincia.label_tag }} {{ form.provincia }}
+                {{ form.distrito.label_tag }} {{ form.distrito }}
+                {{ form.ubigeo.label_tag }} {{ form.ubigeo }}
+            </div>
+            <button type="submit">Consultar</button>
+        </form>
+    </div>
+    
+
+    <script>
+
+        document.querySelector('#id_razon_social').readOnly = true;
+        document.querySelector('#id_estado').readOnly = true;
+        document.querySelector('#id_condicion').readOnly = true;
+        document.querySelector('#id_direccion').readOnly = true;
+        document.querySelector('#id_departamento').readOnly = true;
+        document.querySelector('#id_provincia').readOnly = true;
+        document.querySelector('#id_distrito').readOnly = true;
+        document.querySelector('#id_ubigeo').readOnly = true;
+    </script>
+</body>
+
+</html>

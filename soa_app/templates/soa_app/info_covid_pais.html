@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Información del País</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        .main-container {
+            transition: margin-left 0.5s;
+            /* Agregamos una transición al margen izquierdo */
+        }
+
+        .navbar {
+            background-color: #5e95a1;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .menu-icon {
+            font-size: 24px;
+            cursor: pointer;
+            color: white;
+            margin-right: 10px;
+        }
+
+        .menu {
+            width: 0;
+            height: 100%;
+            background-color: #5e95a1;
+            position: fixed;
+            top: 0;
+            left: 0;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .menu a {
+            display: block;
+            color: #fff;
+            margin-bottom: 8px;
+            text-decoration: none;
+            padding: 10px;
+        }
+
+        .navbar h1 {
+            margin-left: 20px;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+            /* Evita la barra de desplazamiento horizontal */
+        }
+
+        label {
+            margin-bottom: 10px;
+        }
+
+        select {
+            width: 100%;
+            max-width: 300px;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 8px 15px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        
+
+        h2 {
+            color: #4caf50;
+            margin-bottom: 10px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin: 5px 0;
+        }
+
+        p.error {
+            color: red;
+        }
+
+        #contenedor {
+            text-align: center;
+        }
+
+        #informacion {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main-container">
+        <div class="navbar">
+            <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
+            <div class="menu">
+
+                <!-- Agrega las opciones del menú aquí -->
+                <a href="#" onclick="openStartPage()" class="fas fa-home"> Inicio</a>
+                <a href="#" onclick="openAddForm()" class="fas fa-users"> Usuarios</a>
+                <a href="#" onclick="vacuForm()" class="fa fa-hospital-o"> COVID-19 Vacunas</a>
+                <a href="#" onclick="countryForm()" class="fa fa-globe"> COVID-19</a>
+                <a href="#" onclick="allForm()" class="fa fa-bar-chart"> COVID-19 Historia</a>
+                <a href="#" onclick="openConsultaAI()" class="fa fa-bar-chart">CONSULTAS AI</a>
+                <a href="#" onclick="noticias()" class="fa fa-bar-chart">noticias AI</a>
+
+
+
+            </div>
+            <h1 style="color: white;">Laboratorio Tamal</h1>
+            <a href="{% url 'logout' %}" style="color:#fff; font-size: 48px" white>
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
+        </div>
+        <br>
+        <br>
+        <div id="contenedor">
+            <label for="country">Selecciona un país:</label>
+            <select id="country" class="js-example-basic-single">
+            </select>
+            <button onclick="consultarInformacion()">Consultar Información</button>
+            <div id="informacion"></div>
+        </div>
+
+    </div>
+
+    <script>
+        // Obtener la lista de países y llenar el menú desplegable con select2
+        $(document).ready(function () {
+            $('#country').select2();
+            fetch('https://disease.sh/v3/covid-19/countries')
+                .then(response => response.json())
+                .then(data => {
+                    const countrySelect = $('#country');
+                    data.forEach(country => {
+                        const option = new Option(country.country, country.country);
+                        countrySelect.append(option);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error al obtener la lista de países:', error);
+                });
+        });
+
+        // Función para consultar la información del país seleccionado
+        function consultarInformacion() {
+            const selectedCountry = $('#country').val();
+            const apiUrl = `https://disease.sh/v3/covid-19/countries/${selectedCountry}`;
+
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    // Mostrar la información en el elemento con id "informacion"
+                    $('#informacion').html(`
+                        <h2>Información de COVID-19 para ${selectedCountry}</h2>
+                        <img src="${data.countryInfo.flag}" alt="Flag">
+                        <p>Casos totales: ${data.cases}</p>
+                        <p>Muertes: ${data.deaths}</p>
+                        <p>Recuperados: ${data.recovered}</p>
+                        <p>Casos activos: ${data.active}</p>
+                        <p>Casos críticos: ${data.critical}</p>
+                        <p>Casos por millón: ${data.casesPerOneMillion}</p>
+                        <p>Muertes por millón: ${data.deathsPerOneMillion}</p>
+                        <p>Tests realizados: ${data.tests}</p>
+                        <p>Tests por millón: ${data.testsPerOneMillion}</p>
+                        <p>Población: ${data.population}</p>
+                        <p>Continent: ${data.continent}</p>
+                    `);
+                })
+                .catch(error => {
+                    console.error('Error al obtener información del país:', error);
+                    $('#informacion').html('<p class="error">Error al obtener información del país. Inténtelo de nuevo.</p>');
+                });
+        }
+
+        function toggleMenu() {
+            var menu = document.querySelector('.menu');
+            menu.style.width = menu.style.width === '200px' ? '0' : '200px';
+            document.querySelector('.main-container').style.marginLeft = menu.style.width === '200px' ? '200px' : '0';
+        }
+
+        function closeMenu() {
+            var menu = document.querySelector('.menu');
+            menu.style.width = '0';
+            document.querySelector('.main-container').style.marginLeft = '0';
+        }
+
+        function openAddForm() {
+            // Redirigir a la página dniinfo.html
+            window.location.href = '/listar_dni_info';
+        }
+        function openStartPage() {
+            // Redirigir a la página dniinfo.html
+            window.location.href = '/inicio';
+        }
+
+        function vacuForm() {
+            // Redirigir a la página dniinfo.html
+            window.location.href = '/vacuna_info';
+        }
+
+        function countryForm() {
+            // Redirigir a la página dniinfo.html
+            window.location.href = '/info_covid_pais';
+        }
+        function allForm() {
+            // Redirigir a la página dniinfo.html
+            window.location.href = '/grafico_covid';
+        }
+        function openConsultaAI() {
+            // Redirigir a la página dniinfo.html
+            window.location.href = '/openai_consulta';
+        }
+        function noticias() {
+            // Redirigir a la página dniinfo.html
+            window.location.href = '/noticias';
+        }
+
+    </script>
+</body>
+
+</html>

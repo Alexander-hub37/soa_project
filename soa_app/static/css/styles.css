@@ -1,0 +1,47 @@
+/* styles.css */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    text-align: center;
+    padding: 50px;
+}
+
+form {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    margin: 0 auto;
+    max-width: 600px; /* Aumenta el ancho máximo del formulario */
+}
+
+.column-left, .column-right {
+    display: inline-block;
+    vertical-align: top;
+    width: 45%; /* Establece el ancho de las columnas */
+}
+
+input {
+    width: 80%; /* Ajusta el ancho de los campos de entrada */
+    padding: 10px;
+    margin: 5px 0;
+}
+
+label {
+    display: inline-block;
+    width: 30%; /* Ancho de las etiquetas */
+    text-align: right;
+    margin-right: 5px;
+}
+
+button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}

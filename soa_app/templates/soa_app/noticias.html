@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOTICIAS</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/chatbot.css' %}">
+    
+    <style>
+        /* Agrega el código CSS aquí */
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .card {
+            flex: 1 0 calc(25% - 20px);
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin: 10px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+    </style>
+
+    <style>
+        /* Agrega el resto del código CSS aquí */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+            /* Evita la barra de desplazamiento horizontal */
+        }
+
+        .main-container {
+            transition: margin-left 0.5s;
+            /* Agregamos una transición al margen izquierdo */
+        }
+
+        .navbar {
+            background-color: #5e95a1;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .menu-icon {
+            font-size: 24px;
+            cursor: pointer;
+            color: white;
+            margin-right: 10px;
+        }
+
+        .menu {
+            width: 0;
+            height: 100%;
+            background-color: #5e95a1;
+            position: fixed;
+            top: 0;
+            left: 0;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: center;
+
+        }
+
+        .menu a {
+            display: block;
+            color: #fff;
+            margin-bottom: 8px;
+            text-decoration: none;
+            padding: 10px;
+            margin-left: 30px;
+            margin-top: 30px;
+        }
+
+        .navbar h1 {
+            margin-left: 20px;
+        }
+
+        .login-container {
+            margin: 50px auto;
+            max-width: 300px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .login-container label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .login-container input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+
+        .login-container button {
+            background-color: #5e95a1;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .menu-header {
+            font-size: 1.5em;
+            /* Tamaño de fuente más grande */
+            margin-bottom: 10px;
+            text-align: center;
+
+            /* Espaciado inferior para separar del resto de las opciones */
+        }
+
+        .menu-option {
+            display: block;
+            color: #fff;
+            margin-bottom: 8px;
+            text-decoration: none;
+            padding: 10px;
+            font-size: 1.2em;
+            /* Tamaño de fuente para las opciones */
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="main-container">
+        <div class="navbar">
+            <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
+            <div class="menu">
+                <!-- Agrega las opciones del menú aquí -->
+                <a href="#" onclick="openStartPage()" class="fas fa-home"> Inicio</a>
+                <a href="#" onclick="openAddForm()" class="fas fa-users"> Usuarios</a>
+                <a href="#" onclick="vacuForm()" class="fa fa-hospital-o"> COVID-19 Vacunas</a>
+                <a href="#" onclick="countryForm()" class="fa fa-globe"> COVID-19</a>
+                <a href="#" onclick="allForm()" class="fa fa-bar-chart"> COVID-19 Historia</a>
+                <a href="#" onclick="openConsultaAI()" class="fa fa-bar-chart">CONSULTAS AI</a>
+                <a href="#" onclick="noticias()" class="fa fa-bar-chart">noticias AI</a>
+            </div>
+            <h1 style="color: white;">Laboratorio Tamal</h1>
+            <a href="{% url 'logout' %}" style="color:#fff; font-size: 48px" white>
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
+        </div>
+
+        <!-- Agrega el código HTML de las tarjetas de noticias aquí -->
+        <div class="card-container">
+            {% for noticia in noticias %}
+                <div class="card">
+                    <img src="{{ noticia.image }}" alt="{{ noticia.title }}">
+                    <h2>{{ noticia.title }}</h2>
+                    <p>{{ noticia.description }}</p>
+                    <a href="{{ noticia.url }}" target="_blank">Leer más</a>
+                </div>
+            {% endfor %}
+        </div>
+
+    </div>
+
+    <script>
+        function loadImage(imageElement, imageUrl, backupImageUrl) {
+        imageElement.onerror = function () {
+            this.src = backupImageUrl;
+        };
+        imageElement.src = imageUrl;
+    }
+
+    // Llama a esta función para cargar la imagen con manejo de errores
+    loadImage(document.getElementById('noticia-image-1'), '{{ noticia.image }}', 'ruta_de_la_imagen_de_respaldo.jpg');
+        function toggleMenu() {
+            var menu = document.querySelector('.menu');
+            menu.style.width = menu.style.width === '200px' ? '0' : '200px';
+            document.querySelector('.main-container').style.marginLeft = menu.style.width === '200px' ? '200px' : '0';
+        }
+    
+        function closeMenu() {
+            var menu = document.querySelector('.menu');
+            menu.style.width = '0';
+            document.querySelector('.main-container').style.marginLeft = '0';
+        }
+    
+        function redirectTo(path) {
+            window.location.href = path;
+        }
+    
+        function openAddForm() {
+            redirectTo('/listar_dni_info');
+        }
+    
+        function openStartPage() {
+            redirectTo('/inicio');
+        }
+    
+        function vacuForm() {
+            redirectTo('/vacuna_info');
+        }
+    
+        function countryForm() {
+            redirectTo('/info_covid_pais');
+        }
+    
+        function allForm() {
+            redirectTo('/grafico_covid');
+        }
+    
+        function openConsultaAI() {
+            redirectTo('/openai_consulta');
+        }
+    
+        function noticias() {
+            redirectTo('/noticias');
+        }
+    </script>
+    
+
+</body>
+
+</html>

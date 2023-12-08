@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gráfico de COVID-19</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        .main-container {
+            transition: margin-left 0.5s;
+            /* Agregamos una transición al margen izquierdo */
+        }
+
+        .navbar {
+            background-color: #5e95a1;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .menu-icon {
+            font-size: 24px;
+            cursor: pointer;
+            color: white;
+            margin-right: 10px;
+        }
+
+        .menu {
+            width: 0;
+            height: 100%;
+            background-color: #5e95a1;
+            position: fixed;
+            top: 0;
+            left: 0;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .menu a {
+            display: block;
+            color: #fff;
+            margin-bottom: 8px;
+            text-decoration: none;
+            padding: 10px;
+        }
+
+        .navbar h1 {
+            margin-left: 20px;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+            /* Evita la barra de desplazamiento horizontal */
+        }
+
+        #chart-container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        canvas {
+            width: 100%;
+            height: auto;
+        }
+
+        #contenedor {
+            text-align: center;
+            margin: 20px;
+            /* Ajusta el margen según sea necesario */
+        }
+
+        #myChart {
+            max-width: 700px;
+            /* Ajusta el ancho máximo del gráfico */
+            width: 100%;
+            height: 800px;
+            margin: 0 auto;
+            /* Centra el gráfico horizontalmente */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main-container">
+        <div class="navbar">
+            <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
+            <div class="menu">
+
+                <!-- Agrega las opciones del menú aquí -->
+                <a href="#" onclick="openStartPage()" class="fas fa-home"> Inicio</a>
+                <a href="#" onclick="openAddForm()" class="fas fa-users"> Usuarios</a>
+                <a href="#" onclick="vacuForm()" class="fa fa-hospital-o"> COVID-19 Vacunas</a>
+                <a href="#" onclick="countryForm()" class="fa fa-globe"> COVID-19</a>
+                <a href="#" onclick="allForm()" class="fa fa-bar-chart"> COVID-19 Historia</a>
+                <a href="#" onclick="openConsultaAI()" class="fa fa-bar-chart">CONSULTAS AI</a>
+                <a href="#" onclick="noticias()" class="fa fa-bar-chart">noticias AI</a>
+
+
+
+            </div>
+            <h1 style="color: white;">Laboratorio Tamal</h1>
+            <a href="{% url 'logout' %}" style="color:#fff; font-size: 48px" white>
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
+        </div>
+
+        <br>
+        <br>
+        <div id="contenedor">
+            <div>
+                <canvas id="myChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Obtener datos de la API
+            fetch('https://disease.sh/v3/covid-19/historical/all?lastdays=all')
+                .then(response => response.json())
+                .then(data => {
+
+                    const dates = Object.keys(data.cases);
+                    const cases = Object.values(data.cases);
+                    const deaths = Object.values(data.deaths);
+
+
+                    const filteredDates = dates.filter(date => date.endsWith('21') || date.endsWith('22') || date.endsWith('23'));
+
+
+                    const ctx = document.getElementById('myChart').getContext('2d');
+
+                    // Crear el gráfico de líneas
+                    const myChart = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: filteredDates,
+                            datasets: [
+                                {
+                                    label: 'Casos',
+                                    data: cases.slice(-filteredDates.length),
+                                    borderColor: 'blue',
+                                    borderWidth: 2,
+                                    fill: false,
+                                },
+                                {
+                                    label: 'Muertes',
+                                    data: deaths.slice(-filteredDates.length),
+                                    borderColor: 'red',
+                                    borderWidth: 2,
+                                    fill: false,
+                                },
+                            ],
+                        },
+                        options: {
+                            scales: {
+                                x: {
+                                    display: true,
+                                    grid: {
+                                        display: false,
+                                    },
+                                },
+                                y: {
+                                    display: true,
+                                    ticks: {
+                                        callback: function (value) {
+
+                                            return value / 1000000 + 'M';
+                                        },
+                                    },
+                                },
+                            },
+                            plugins: {
+                                legend: {
+                                    labels: {
+                                        font: {
+                                            size: 14,
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    });
+                })
+                .catch(error => {
+                    console.error('Error al obtener datos de la API:', error);
+                });
+        });
+
+        function toggleMenu() {
+            var menu = document.querySelector('.menu');
+            menu.style.width = menu.style.width === '200px' ? '0' : '200px';
+            document.querySelector('.main-container').style.marginLeft = menu.style.width === '200px' ? '200px' : '0';
+        }
+
+        function closeMenu() {
+            var menu = document.querySelector('.menu');
+            menu.style.width = '0';
+            document.querySelector('.main-container').style.marginLeft = '0';
+        }
+
+        function openAddForm() {
+            // Redirigir a la página dniinfo.html
+            window.location.href = '/listar_dni_info';
+        }
+        function openStartPage() {
+            // Redirigir a la página dniinfo.html
+            window.location.href = '/inicio';
+        }
+        function vacuForm() {
+            // Redirigir a la página dniinfo.html
+            window.location.href = '/vacuna_info';
+        }
+
+        function countryForm() {
+            // Redirigir a la página dniinfo.html
+            window.location.href = '/info_covid_pais';
+        }
+        function allForm() {
+            // Redirigir a la página dniinfo.html
+            window.location.href = '/grafico_covid';
+        }
+        function openConsultaAI() {
+            // Redirigir a la página dniinfo.html
+            window.location.href = '/openai_consulta';
+        }
+        function noticias() {
+            // Redirigir a la página dniinfo.html
+            window.location.href = '/noticias';
+        }
+
+    </script>
+</body>
+
+</html>

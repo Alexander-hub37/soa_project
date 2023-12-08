@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#000000" />
+  <title>LOGIN</title>
+  {% load static %}
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter%3A700" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat%3A300%2C400%2C500%2C600" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro%3A300%2C400%2C500%2C600%2C700" />
+  <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+</head>
+
+<body>
+  <div class="login-1X7">
+    <div class="auto-group-fhjo-yMT">
+      <p class="esta-es-una-clinica-especializa-en-el-cuidado-de-las-personas-EAu">Esta es una clinica especializa en el
+        cuidado de las personas</p>
+      <p class="login-EaD">Login</p>
+      <p class="email-hih">Email</p>
+      <p class="password-1UV">Password</p>
+    
+      <form method="post">
+        {% csrf_token %}
+        <input type="email" placeholder="example@gmail.com" class="examplegmailcom-XBw" name="correo" required>
+        <div class="auto-group-f9lu-Ro7">
+          <input type="password" class="enter-you-password-YMw" placeholder="Enter your password" name="contrasena"
+            required>
+        </div>
+        <div class="line-3-zUq">
+        </div>
+        <div class="line-4-vdP">
+        </div>
+        <button class="auto-group-hu8h-Srd" type="submit">LOGIN</button>
+      </form>
+
+    </div>
+    <img class="laboratotamal-1-QS5" src="{% static 'img/laboratotamal-1.png' %}" alt="Mi Imagen">
+  </div>
+  
+</body>
+
+</html>

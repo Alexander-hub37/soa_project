@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CONSULTA</title>
+    <!-- Agrega el enlace a Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-y5qAr2z95MqLxUKnBE4kLpVdQFep/KrHONNl+Y1qO4P2ESxwW+NZl5l3G27JhMz" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+            /* Evita la barra de desplazamiento horizontal */
+        }
+
+        .main-container {
+            transition: margin-left 0.5s;
+            /* Agregamos una transición al margen izquierdo */
+        }
+
+        .navbar {
+            background-color: #5e95a1;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .menu-icon {
+            font-size: 24px;
+            cursor: pointer;
+            color: white;
+            margin-right: 10px;
+        }
+
+        .menu {
+            width: 0;
+            height: 100%;
+            background-color: #5e95a1;
+            position: fixed;
+            top: 0;
+            left: 0;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .menu a {
+            display: block;
+            color: #fff;
+            margin-bottom: 8px;
+            text-decoration: none;
+            padding: 10px;
+        }
+
+        .navbar h1 {
+            margin-left: 20px;
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 20;
+            border-radius: 30px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 600px;
+            text-align: center;
+            margin-top: 50px;
+            margin-left: 380px;
+        }
+
+        .form-control {
+            border: 2px solid #5e95a1;
+            border-radius: 25px;
+            padding: 10px;
+        }
+
+        .form-label {
+            color: #5e95a1;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .btn-success {
+            background-color: #5e95a1;
+            border: none;
+            border-radius: 25px;
+            padding: 12px 45px;
+            font-weight: bold;
+            margin-top: 10px;
+            color: white;
+
+        }
+
+        .formRow {
+            position: relative;
+            width: 40%;
+            margin-left: 380px;
+            margin-top: 50px;
+            border-radius: 30px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+        }
+
+        .formRow--item {
+            display: block;
+            width: 100%;
+        }
+
+        .formRow--input {
+            position: relative;
+            padding: 15px 20px 11px;
+            width: 50%;
+            outline: none;
+            border: solid 1px #95989a;
+            border-radius: 4px;
+            color: #2c3235;
+            letter-spacing: .2px;
+            font-weight: 400;
+            font-size: 16px;
+            resize: none;
+            -webkit-transition: all .2s ease;
+            transition: all .2s ease;
+        }
+
+        .formRow--input-wrapper {
+            position: relative;
+            display: block;
+            width: 100%;
+        }
+
+        .formRow--input-wrapper.active .placeholder {
+            top: -5px;
+            background-color: #ffffff;
+            color: #5e95a1;
+            text-transform: uppercase;
+            letter-spacing: .8px;
+            font-size: 11px;
+            line-height: 14px;
+            -webkit-transform: translateY(0);
+            transform: translateY(0);
+        }
+
+        .formRow--input-wrapper.active .formRow--input:not(:focus):not(:hover)~.placeholder {
+            color: #5e95a1
+        }
+
+        .formRow--input-wrapper .formRow--input:focus,
+        .formRow--input-wrapper .formRow--input:hover {
+            border-color: #5e95a1;
+        }
+
+        .formRow .placeholder {
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            display: block;
+            padding: 0 10px;
+            color: #95989a;
+            white-space: nowrap;
+            letter-spacing: .2px;
+            font-weight: normal;
+            font-size: 16px;
+            -webkit-transition: all, .2s;
+            transition: all, .2s;
+            -webkit-transform: translateY(-50%);
+            transform: translateY(-50%);
+            pointer-events: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="main-container">
+        <div class="navbar">
+            <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
+            <div class="menu">
+                
+                <!-- Agrega las opciones del menú aquí -->
+                <a href="#" onclick="openStartPage()" class="fas fa-home"> Inicio</a>
+                <a href="#" onclick="openAddForm()" class="fas fa-users"> Usuarios</a>
+                <a href="#" onclick="vacuForm()" class="fa fa-hospital-o"> COVID-19 Vacunas</a>
+                <a href="#" onclick="countryForm()" class="fa fa-globe"> COVID-19</a>
+                <a href="#" onclick="allForm()" class="fa fa-bar-chart"> COVID-19 Historia</a>
+                <a href="#" onclick="openConsultaAI()" class="fa fa-bar-chart">CONSULTAS AI</a>
+                <a href="#" onclick="noticias()" class="fa fa-bar-chart">noticias AI</a>
+                
+                
+
+                
+            </div>
+            <h1 style="color: white;">Laboratorio Tamal</h1>
+            <a href="{% url 'logout' %}" style="color:#fff; font-size: 48px" white>
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
+        </div>
+        <div class="main-container">
+            <fieldset class="formRow">
+                <br>
+
+                <h2 class="mb-4">Realizar Consulta</h2>
+                <form method="post" action="{% url 'openai_consulta' %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+
+
+                        <div class="formRow--item">
+                            <label for="firstname" class="formRow--input-wrapper js-inputWrapper">
+                                <input type="text" class="formRow--input js-input" placeholder="Ingrese su consulta" id="openai_consulta"
+                                    name="openai_consulta">
+                                    <button type="submit" name="Consulta_bnt" class="btn btn-success">Realizar Consulta</button>
+                            </label>
+
+                        </div>
+                    </div>
+                    <br>
+                    <div class="mb-3">
+
+                        <div class="formRow--item">
+                            <label for="respuesta_openai" class="formRow--input-wrapper js-inputWrapper">
+                                <textarea class="formRow--input js-input" class="form-control" id="respuesta_openai" name="respuesta_openai" rows="5" cols="33">
+                                    {{respuesta}}
+                                    </textarea>
+                                
+                            </label>
+                            
+                        </div>
+
+
+                    </div>
+                    <br>
+                    
+                </form>
+                <br>
+        </div>
+        </fieldset>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-GLhlTQ8iKDEr+HxK5I57QFi5QSH9tFZScNp4U9H6JlqL8uUByh8R+QTFUpn538mD"
+        crossorigin="anonymous"></script>
+
+    <script src="//code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+
+
+    <script>
+        function toggleMenu() {
+            var menu = document.querySelector('.menu');
+            menu.style.width = menu.style.width === '200px' ? '0' : '200px';
+            document.querySelector('.main-container').style.marginLeft = menu.style.width === '200px' ? '200px' : '0';
+        }
+
+        function closeMenu() {
+            var menu = document.querySelector('.menu');
+            menu.style.width = '0';
+            document.querySelector('.main-container').style.marginLeft = '0';
+        }
+
+        
+
+        function openAddForm() {
+            // Redirigir a la página dniinfo.html
+            window.location.href = '/listar_dni_info';
+        }
+        function openStartPage() {
+            // Redirigir a la página dniinfo.html
+            window.location.href = '/inicio';
+        }
+        function vacuForm() {
+            // Redirigir a la página dniinfo.html
+            window.location.href = '/vacuna_info';
+        }
+
+        function countryForm() {
+            // Redirigir a la página dniinfo.html
+            window.location.href = '/info_covid_pais';
+        }
+        function allForm() {
+            // Redirigir a la página dniinfo.html
+            window.location.href = '/grafico_covid';
+        }
+        function openConsultaAI() {
+            // Redirigir a la página dniinfo.html
+            window.location.href = '/openia_consulta';
+        }
+        function noticias() {
+            // Redirigir a la página dniinfo.html
+            window.location.href = '/noticias';
+        }
+
+        var $inputItem = $(".js-inputWrapper");
+        $inputItem.length && $inputItem.each(function () {
+            var $this = $(this),
+                $input = $this.find(".formRow--input"),
+                placeholderTxt = $input.attr("placeholder"),
+                $placeholder;
+
+            $input.after('<span class="placeholder">' + placeholderTxt + "</span>"),
+                $input.attr("placeholder", ""),
+                $placeholder = $this.find(".placeholder"),
+
+                $input.val().length ? $this.addClass("active") : $this.removeClass("active"),
+
+                $input.on("focusout", function () {
+                    $input.val().length ? $this.addClass("active") : $this.removeClass("active");
+                }).on("focus", function () {
+                    $this.addClass("active");
+                });
+        });
+
+    </script>
+
+</body>
+
+</html>

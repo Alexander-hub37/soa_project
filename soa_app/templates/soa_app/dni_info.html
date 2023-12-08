@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DNI Info Form</title>
+    <!-- Agrega el enlace a Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-y5qAr2z95MqLxUKnBE4kLpVdQFep/KrHONNl+Y1qO4P2ESxwW+NZl5l3G27JhMz" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+            /* Evita la barra de desplazamiento horizontal */
+        }
+
+        .main-container {
+            transition: margin-left 0.5s;
+            /* Agregamos una transición al margen izquierdo */
+        }
+
+        .navbar {
+            background-color: #5e95a1;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .menu-icon {
+            font-size: 24px;
+            cursor: pointer;
+            color: white;
+            margin-right: 10px;
+        }
+
+        .menu {
+            width: 0;
+            height: 100%;
+            background-color: #5e95a1;
+            position: fixed;
+            top: 0;
+            left: 0;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .menu a {
+            display: block;
+            color: #fff;
+            margin-bottom: 8px;
+            text-decoration: none;
+            padding: 10px;
+        }
+
+        .navbar h1 {
+            margin-left: 20px;
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 20;
+            border-radius: 30px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 600px;
+            text-align: center;
+            margin-top: 50px;
+            margin-left: 380px;
+        }
+
+        .form-control {
+            border: 2px solid #5e95a1;
+            border-radius: 25px;
+            padding: 10px;
+        }
+
+        .form-label {
+            color: #5e95a1;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .btn-success {
+            background-color: #5e95a1;
+            border: none;
+            border-radius: 25px;
+            padding: 12px 45px;
+            font-weight: bold;
+            margin-top: 10px;
+            color: white;
+
+        }
+
+        .formRow {
+            position: relative;
+            width: 40%;
+            margin-left: 380px;
+            margin-top: 50px;
+            border-radius: 30px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+        }
+
+        .formRow--item {
+            display: block;
+            width: 100%;
+        }
+
+        .formRow--input {
+            position: relative;
+            padding: 15px 20px 11px;
+            width: 50%;
+            outline: none;
+            border: solid 1px #95989a;
+            border-radius: 4px;
+            color: #2c3235;
+            letter-spacing: .2px;
+            font-weight: 400;
+            font-size: 16px;
+            resize: none;
+            -webkit-transition: all .2s ease;
+            transition: all .2s ease;
+        }
+
+        .formRow--input-wrapper {
+            position: relative;
+            display: block;
+            width: 100%;
+        }
+
+        .formRow--input-wrapper.active .placeholder {
+            top: -5px;
+            background-color: #ffffff;
+            color: #5e95a1;
+            text-transform: uppercase;
+            letter-spacing: .8px;
+            font-size: 11px;
+            line-height: 14px;
+            -webkit-transform: translateY(0);
+            transform: translateY(0);
+        }
+
+        .formRow--input-wrapper.active .formRow--input:not(:focus):not(:hover)~.placeholder {
+            color: #5e95a1
+        }
+
+        .formRow--input-wrapper .formRow--input:focus,
+        .formRow--input-wrapper .formRow--input:hover {
+            border-color: #5e95a1;
+        }
+
+        .formRow .placeholder {
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            display: block;
+            padding: 0 10px;
+            color: #95989a;
+            white-space: nowrap;
+            letter-spacing: .2px;
+            font-weight: normal;
+            font-size: 16px;
+            -webkit-transition: all, .2s;
+            transition: all, .2s;
+            -webkit-transform: translateY(-50%);
+            transform: translateY(-50%);
+            pointer-events: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="main-container">
+        <div class="navbar">
+            <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
+            <div class="menu">
+
+                <!-- Agrega las opciones del menú aquí -->
+                <a href="#" onclick="openStartPage()" class="fas fa-home"> Inicio</a>
+                <a href="#" onclick="openAddForm()" class="fas fa-users"> Usuarios</a>
+                <a href="#" onclick="vacuForm()" class="fa fa-hospital-o"> COVID-19 Vacunas</a>
+                <a href="#" onclick="countryForm()" class="fa fa-globe"> COVID-19</a>
+                <a href="#" onclick="allForm()" class="fa fa-bar-chart"> COVID-19 Historia</a>
+                <a href="#" onclick="openConsultaAI()" class="fa fa-bar-chart">CONSULTAS AI</a>
+                <a href="#" onclick="noticias()" class="fa fa-bar-chart">noticias AI</a>
+
+
+
+            </div>
+            <h1 style="color: white;">Laboratorio Tamal</h1>
+            <a href="{% url 'logout' %}" style="color:#fff; font-size: 48px" white>
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
+        </div>
+        <div class="main-container">
+            <fieldset class="formRow">
+                <br>
+
+                <h2 class="mb-4">Registrar Usuario</h2>
+                <form method="post" action="{% url 'dni_info' %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+
+
+                        <div class="formRow--item">
+                            <label for="firstname" class="formRow--input-wrapper js-inputWrapper">
+                                <input type="text" class="formRow--input js-input" placeholder="DNI" id="id_dni"
+                                    name="dni">
+                                <button type="button" class="btn btn-success" onclick="obtenerDatos()">Obtener
+                                    Datos</button>
+
+                            </label>
+
+                        </div>
+                    </div>
+                    <br>
+                    <div class="mb-3">
+
+                        <div class="formRow--item">
+                            <label for="firstname" class="formRow--input-wrapper js-inputWrapper">
+                                <input type="text" class="formRow--input js-input" class="form-control"
+                                    placeholder="Nombres" id="id_nombres" name="nombres" readonly>
+                            </label>
+                            <br>
+                            <label for="firstname" class="formRow--input-wrapper js-inputWrapper">
+                                <input type="text" class="formRow--input js-input" placeholder="Apellido Paterno"
+                                    id="id_apellido_paterno" name="apellido_paterno" readonly>
+                            </label>
+                            <br>
+                            <label for="firstname" class="formRow--input-wrapper js-inputWrapper">
+                                <input type="text" class="formRow--input js-input" placeholder="Apellido Materno"
+                                    id="id_apellido_materno" name="apellido_materno" readonly>
+                            </label>
+                            <br>
+                            <label for="firstname" class="formRow--input-wrapper js-inputWrapper">
+                                <input type="text" class="formRow--input js-input" placeholder="Cod. Verificacion"
+                                    id="id_cod_verifica" name="cod_verifica" readonly>
+                            </label>
+                            <br>
+                            <label for="firstname" class="formRow--input-wrapper js-inputWrapper">
+                                <input type="email" class="formRow--input js-input" placeholder="E-mail" id="id_correo"
+                                    name="correo">
+                            </label>
+                            <br>
+                            <label for="firstname" class="formRow--input-wrapper js-inputWrapper">
+                                <input type="password" class="formRow--input js-input" placeholder="Contraseña"
+                                    id="id_contrasena" name="contrasena">
+                            </label>
+
+                        </div>
+
+
+                    </div>
+                    <br>
+                    <button type="submit" name="guardar" class="btn btn-success">Guardar</button>
+                </form>
+                <br>
+        </div>
+        </fieldset>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-GLhlTQ8iKDEr+HxK5I57QFi5QSH9tFZScNp4U9H6JlqL8uUByh8R+QTFUpn538mD"
+        crossorigin="anonymous"></script>
+
+    <script src="//code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+
+
+    <script>
+        function toggleMenu() {
+            var menu = document.querySelector('.menu');
+            menu.style.width = menu.style.width === '200px' ? '0' : '200px';
+            document.querySelector('.main-container').style.marginLeft = menu.style.width === '200px' ? '200px' : '0';
+        }
+
+        function closeMenu() {
+            var menu = document.querySelector('.menu');
+            menu.style.width = '0';
+            document.querySelector('.main-container').style.marginLeft = '0';
+        }
+
+        function obtenerDatos() {
+            // Obtener el valor del campo DNI
+            const dni = document.getElementById('id_dni').value;
+
+            // Verificar si el campo DNI no está vacío
+            if (dni.trim() !== '') {
+                // Construir la URL de la API con el DNI
+                const url = `https://dniruc.apisperu.com/api/v1/dni/${dni}?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImFsZXhhbmRlcnNrMjAxOUBnbWFpbC5jb20ifQ.qTHRcHFhIU0LuI06lYJWuARn3aozodTA7V5g2baKRIs`;
+
+                // Realizar la solicitud a la API
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Actualizar los campos del formulario con los datos obtenidos
+                        document.getElementById('id_nombres').value = data.nombres || '';
+                        document.getElementById('id_apellido_paterno').value = data.apellidoPaterno || '';
+                        document.getElementById('id_apellido_materno').value = data.apellidoMaterno || '';
+                        document.getElementById('id_cod_verifica').value = data.codVerifica || '';
+                    })
+                    .catch(error => {
+                        console.error('Error al obtener datos del DNI:', error);
+                        alert('Error al obtener datos del DNI. Por favor, inténtelo de nuevo.');
+                    });
+            } else {
+                alert('Ingrese un número de DNI antes de obtener los datos.');
+            }
+        }
+
+        function openAddForm() {
+            // Redirigir a la página dniinfo.html
+            window.location.href = '/listar_dni_info';
+        }
+        function openStartPage() {
+            // Redirigir a la página dniinfo.html
+            window.location.href = '/inicio';
+        }
+        function vacuForm() {
+            // Redirigir a la página dniinfo.html
+            window.location.href = '/vacuna_info';
+        }
+
+        function countryForm() {
+            // Redirigir a la página dniinfo.html
+            window.location.href = '/info_covid_pais';
+        }
+        function allForm() {
+            // Redirigir a la página dniinfo.html
+            window.location.href = '/grafico_covid';
+        }
+        function openConsultaAI() {
+            // Redirigir a la página dniinfo.html
+            window.location.href = '/openai_consulta';
+        }
+        function noticias() {
+            // Redirigir a la página dniinfo.html
+            window.location.href = '/noticias';
+        }
+
+        var $inputItem = $(".js-inputWrapper");
+        $inputItem.length && $inputItem.each(function () {
+            var $this = $(this),
+                $input = $this.find(".formRow--input"),
+                placeholderTxt = $input.attr("placeholder"),
+                $placeholder;
+
+            $input.after('<span class="placeholder">' + placeholderTxt + "</span>"),
+                $input.attr("placeholder", ""),
+                $placeholder = $this.find(".placeholder"),
+
+                $input.val().length ? $this.addClass("active") : $this.removeClass("active"),
+
+                $input.on("focusout", function () {
+                    $input.val().length ? $this.addClass("active") : $this.removeClass("active");
+                }).on("focus", function () {
+                    $this.addClass("active");
+                });
+        });
+
+    </script>
+
+</body>
+
+</html>

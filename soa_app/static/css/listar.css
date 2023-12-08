@@ -1,0 +1,206 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    overflow-x: hidden;
+    /* Evita la barra de desplazamiento horizontal */
+}
+
+.main-container {
+    transition: margin-left 0.5s;
+    /* Agregamos una transición al margen izquierdo */
+}
+
+.navbar {
+    background-color: #5e95a1;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.menu-icon {
+    font-size: 24px;
+    cursor: pointer;
+    color: white;
+    margin-right: 10px;
+}
+
+.menu {
+    width: 0;
+    height: 100%;
+    background-color: #5e95a1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.menu a {
+    display: block;
+    color: #fff;
+    margin-bottom: 8px;
+    text-decoration: none;
+    padding: 10px;
+}
+
+.navbar h1 {
+    margin-left: 20px;
+}
+
+.login-container {
+    margin: 50px auto;
+    max-width: 300px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.login-container label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.login-container input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+
+.login-container button {
+    background-color: #5e95a1;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.table-container {
+    margin: 50px auto;
+    max-width: 1000px; /* Ajusta según sea necesario */
+}
+
+#dniTable {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+#dniTable th,
+#dniTable td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+#dniTable th {
+    background-color: #5e95a1;
+    color: white;
+}
+
+#dniTable tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+.action-icons {
+    display: flex;
+    gap: 8px;
+}
+
+.add-button {
+    background-color: #5e95a1;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 50px; /* Hace que el botón sea ovalado */
+    cursor: pointer;
+    font-size: 16px; /* Tamaño del texto */
+}
+
+
+.main-container {
+    /* Ajustar según sea necesario */
+    margin: 20px;
+}
+
+.add-button {
+    background-color: #5e95a1;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 50px; /* Hace que el botón sea ovalado */
+    cursor: pointer;
+    font-size: 16px; /* Tamaño del texto */
+}
+
+.modal-container {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+.modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    width: 30%;
+    height: 90%;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 2;
+}
+
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* Agrega estilos específicos para el formulario */
+.animated-input {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.animated-input label {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    color: #5e95a1;
+    transition: top 0.3s, font-size 0.3s;
+}
+
+.animated-input input {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #5e95a1;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Estilo específico para el botón grande */
+.btn-grande {
+    width: 100%;
+    font-size: 20px;
+}
